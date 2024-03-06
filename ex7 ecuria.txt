@@ -1,0 +1,129 @@
+mysql> select * from cheval;
++------------+------------+--------------+----------------+----------------+----------------+----------------+---------------+
+| num_cheval | nom_cheval | num_tatouage | couleur_cheval | num_chevalPere | num_chevalMere | num_persElveur | nomRace       |
++------------+------------+--------------+----------------+----------------+----------------+----------------+---------------+
+|          1 | Horse1     | TAT001       | Brown          |           NULL |           NULL |              1 | Thoroughbred  |
+|          2 | Horse2     | TAT002       | Black          |           NULL |           NULL |              2 | Arabian       |
+|          3 | Horse3     | TAT003       | White          |           NULL |           NULL |              3 | Quarter Horse |
+|          4 | Horse4     | TAT004       | Grey           |           NULL |           NULL |              4 | Appaloosa     |
+|          5 | Horse5     | TAT005       | Bay            |           NULL |           NULL |              5 | Paint Horse   |
++------------+------------+--------------+----------------+----------------+----------------+----------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM race;
++---------------+----------+------------+
+| nomRace       | poidType | tailleType |
++---------------+----------+------------+
+| Appaloosa     |   520.00 |     158.00 |
+| Arabian       |   450.00 |     150.00 |
+| Paint Horse   |   510.00 |     157.00 |
+| Quarter Horse |   550.00 |     155.00 |
+| Thoroughbred  |   500.00 |     160.00 |
++---------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM person;
++------------+-------+---------+-----------+--------------+----------+---------------+
+| num_person | nom   | prenom  | telephon  | adresse      | fonction | num_personSup |
++------------+-------+---------+-----------+--------------+----------+---------------+
+|          1 | John  | Doe     | 123456789 | 123 Main St  | Owner    |          NULL |
+|          2 | Jane  | Doe     | 987654321 | 456 Elm St   | Breeder  |          NULL |
+|          3 | Alice | Smith   | 555555555 | 789 Oak St   | Trainer  |          NULL |
+|          4 | Bob   | Johnson | 111111111 | 321 Pine St  | Owner    |          NULL |
+|          5 | Eva   | Brown   | 999999999 | 654 Cedar St | Breeder  |          NULL |
++------------+-------+---------+-----------+--------------+----------+---------------+
+5 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM croissance;
++---------------+------+------------+-----------+------------+
+| ID_CROISSANCE | mois | tailleMois | poidsMois | num_cheval |
++---------------+------+------------+-----------+------------+
+|             1 |    1 | 50         | 30        |          1 |
+|             2 |    2 | 55         | 35        |          1 |
+|             3 |    3 | 60         | 40        |          1 |
+|             4 |    4 | 65         | 45        |          1 |
+|             5 |    5 | 70         | 50        |          1 |
++---------------+------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM proprietaire;
++------------+------------+------------+------------+
+| num_person | num_cheval | dateAchat  | prix_Achat |
++------------+------------+------------+------------+
+|          1 |          1 | 2023-01-01 |       5000 |
+|          2 |          2 | 2023-02-01 |       6000 |
+|          3 |          3 | 2023-03-01 |       7000 |
+|          4 |          4 | 2023-04-01 |       8000 |
+|          5 |          5 | 2023-05-01 |       9000 |
++------------+------------+------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT * FROM concour;
++--------------------------+--------------+----------------+
+| nomConcour               | anneeConcour | nbrParticipant |
++--------------------------+--------------+----------------+
+| Dressage Competition     |         2023 |             15 |
+| Endurance Competition    |         2023 |             10 |
+| Jumping Competition      |         2023 |             20 |
+| Racing Competition       |         2023 |             30 |
+| Show Jumping Competition |         2023 |             25 |
++--------------------------+--------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM participationconcour ;
++------------+--------------------------+--------------+--------------+
+| num_cheval | nom_concour              | anneeConcour | placeConcour |
++------------+--------------------------+--------------+--------------+
+|          1 | Jumping Competition      |         2023 | 1st Place    |
+|          2 | Dressage Competition     |         2023 | 3rd Place    |
+|          3 | Racing Competition       |         2023 | 2nd Place    |
+|          4 | Show Jumping Competition |         2023 | 4th Place    |
+|          5 | Endurance Competition    |         2023 | 5th Place    |
++------------+--------------------------+--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM cheval WHERE nomRace = 'Arabian' ORDER BY nom_cheval DESC;
++------------+------------+--------------+----------------+----------------+----------------+----------------+---------+
+| num_cheval | nom_cheval | num_tatouage | couleur_cheval | num_chevalPere | num_chevalMere | num_persElveur | nomRace |
++------------+------------+--------------+----------------+----------------+----------------+----------------+---------+
+|          2 | Horse2     | TAT002       | Black          |           NULL |           NULL |              2 | Arabian |
++------------+------------+--------------+----------------+----------------+----------------+----------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select poidType, tailleType from race where nomrace = 'arabian';
++----------+------------+
+| poidType | tailleType |
++----------+------------+
+|   450.00 |     150.00 |
++----------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DISTINCT nom, prenom FROM person JOIN proprietaire ON person.num_person = proprietaire.num_person;
++-------+---------+
+| nom   | prenom  |
++-------+---------+
+| John  | Doe     |
+| Jane  | Doe     |
+| Alice | Smith   |
+| Bob   | Johnson |
+| Eva   | Brown   |
++-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT nom, prenom FROM person WHERE num_personSup IS NULL;
++-------+---------+
+| nom   | prenom  |
++-------+---------+
+| John  | Doe     |
+| Jane  | Doe     |
+| Alice | Smith   |
+| Bob   | Johnson |
+| Eva   | Brown   |
++-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT nomConcour FROM concour WHERE anneeConcour = 2019;
+Empty set (0.00 sec)
+
+
